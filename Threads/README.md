@@ -7,4 +7,4 @@
 - Ejercicio 5: Cálculo de números primos
 - Ejercicio 6: Granja
 - Ejercicio 7: Granja 2
-- Ejercicio 7: Sala de espera de hospital
+- Ejercicio 8: Sala de espera de hospital
