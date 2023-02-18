@@ -17,10 +17,11 @@ public class Productor implements Runnable {
                 Thread.sleep(1000);
 
                 synchronized (numero) {
-                // El valor del número cambia a un número aleatorio.    
-                numero.setNumero(numero.generarAleatorio());
-                // Se envia a todos los demás hilos.
-                numero.notifyAll();
+                    // El valor del número cambia a un número aleatorio.    
+                    numero.setNumero(numero.generarAleatorio());
+                    
+                    // Se envia a todos los demás hilos.
+                    numero.notifyAll();
                 }
                 
             } catch (InterruptedException e) {
