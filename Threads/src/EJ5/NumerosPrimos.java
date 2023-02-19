@@ -3,7 +3,7 @@ package EJ5;
 public class NumerosPrimos {
     
     private static final int MAX_NUMEROS = 1000;
-    private static final int HILOS = 410;
+    private static final int HILOS = 4;
     public static void main(String[] args) throws InterruptedException {
 
         // Cantidad de primos
