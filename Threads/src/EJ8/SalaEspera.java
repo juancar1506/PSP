@@ -4,11 +4,11 @@ public class SalaEspera {
     public static void main(String[] args) {
         Hospital hospital = new Hospital();
 
-        // Creamos la enfermera y la ponemos en marcha
-        Thread enfermera = new Thread(new Enfermero(hospital));
-        enfermera.start();
+        // Creamos enfermero
+        Thread enfermero = new Thread(new Enfermero(hospital));
+        enfermero.start();
 
-        // Creamos los doctores y los ponemos en marcha
+        // Creamos los doctores
         int numDoctores = 3;
         Thread[] doctores = new Thread[numDoctores];
         for (int i = 0; i < numDoctores; i++) {
@@ -16,7 +16,6 @@ public class SalaEspera {
             doctores[i].start();
         }
 
-        // Esperamos un tiempo para que los threads hagan su trabajo
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -24,7 +23,7 @@ public class SalaEspera {
         }
 
         // Terminamos la simulación
-        enfermera.interrupt();
+        enfermero.interrupt();
         for (Thread doctor : doctores) {
             doctor.interrupt();
         }
