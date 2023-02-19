@@ -22,7 +22,7 @@ public class SalaEspera {
             e.printStackTrace();
         }
 
-        // Terminamos la simulación
+        // Fin
         enfermero.interrupt();
         for (Thread doctor : doctores) {
             doctor.interrupt();
