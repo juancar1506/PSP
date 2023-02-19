@@ -4,8 +4,7 @@ public class ControlAcceso {
     private static final int RECURSOS = 10;
     public static void main(String[] args) {
         // Se crea la impresora que se quiere imprimir
-        Impresora
-         impresora = new Impresora();
+        Impresora impresora = new Impresora();
 
 
         // Se crean los recursos que estan esperando a la impresora

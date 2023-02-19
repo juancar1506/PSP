@@ -5,6 +5,6 @@
 - [Ejercicio 3](./src/EJ3/): Comunicación de mensajes
 - [Ejercicio 4](./src/EJ4/): Control de Acceso
 - [Ejercicio 5](./src/EJ5/): Cálculo de números primos
-- Ejercicio 6: Granja
+- [Ejercicio 6](./src/EJ6/): Granja
 - Ejercicio 7: Granja 2
 - Ejercicio 8: Sala de espera de hospital
