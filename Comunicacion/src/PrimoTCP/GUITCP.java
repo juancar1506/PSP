@@ -70,7 +70,7 @@ public class GUITCP  extends JFrame implements ActionListener {
             try {
                 if (clientSocket == null || clientSocket.isClosed()) {
                     String serverAddress = JOptionPane.showInputDialog(this, "Ingresa la dirección del servidor:");
-                    int port = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingresa el número de puerto:"));
+                    int port = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingresa el número del puerto:"));
                     // Se conecta al servidor
                     clientSocket = new Socket(serverAddress, port);
                     out = new PrintWriter(clientSocket.getOutputStream(), true);
