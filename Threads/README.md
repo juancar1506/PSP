@@ -7,4 +7,4 @@
 - [Ejercicio 5](./src/EJ5/): Cálculo de números primos
 - [Ejercicio 6](./src/EJ6/): Granja
 - [Ejercicio 7](./src/EJ7/): Granja 2
-- Ejercicio 8: Sala de espera de hospital
+- [Ejercicio 8](./src/EJ8/): Sala de espera de hospital
