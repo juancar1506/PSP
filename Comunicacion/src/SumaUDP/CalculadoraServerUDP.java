@@ -69,25 +69,25 @@ public class CalculadoraServerUDP {
     private static String calcular (int numero_a, int numero_b, String operacion) {
         int respuesta = 0;
         try { 
-        switch (operacion) {
-            case "+":
-                respuesta = numero_a + numero_b;
+            switch (operacion) {
+                case "+":
+                    respuesta = numero_a + numero_b;
+                    return ""+respuesta;
+                case "-":
+                    respuesta = numero_a - numero_b;
+                    return ""+respuesta;
+                case "*":
+                    respuesta = numero_a * numero_b;
+                    return ""+respuesta;
+                case "/":
+                    respuesta = numero_a / numero_b;
                 return ""+respuesta;
-            case "-":
-                respuesta = numero_a - numero_b;
-                return ""+respuesta;
-            case "*":
-                respuesta = numero_a * numero_b;
-                return ""+respuesta;
-            case "/":
-                respuesta = numero_a / numero_b;
-            return ""+respuesta;
-            default:
-                return "No es un numero o no has pasado una ioperación.\nOperaciones disponilbles ['+','-','*','/']";
+                default:
+                    return "No es un numero o no has pasado una ioperación.\nOperaciones disponilbles ['+','-','*','/']";
+            }
+        } catch (ArithmeticException e) {
+            System.out.println("Algun dato recibido era incorrecto");
         }
-    } catch (ArithmeticException e) {
-        System.out.println("Algun dato recibido era incorrecto");
-    }
-    return "Error recuerda que este programa no válida divisiones entre 0 o números no enteros";
+        return "Error recuerda que este programa no válida divisiones entre 0 o números no enteros";
     }
 }
