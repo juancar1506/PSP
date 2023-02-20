@@ -76,7 +76,7 @@ public class GUIUDP extends JFrame implements ActionListener {
 
                 // Se recibe el número
                 DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
-
+                clientSocket.receive(receivePacket);
                 String response = new String(receivePacket.getData(),0,receivePacket.getLength());
                 textFRespuesta.setText(response);
                 textFRespuesta.setBorder(new EmptyBorder(0,20,0,0));
