@@ -34,13 +34,19 @@ public class CalculadoraServerUDP {
                         serverSocket.receive(recibePaquete);
                         
                         String numero2_string = new String(recibePaquete.getData()).trim();
-                        System.out.println("Se ha recibiido toda la información.");
+                        System.out.println("Se ha recibido toda la información.");
                         System.out.println(numero1_string + ", "+ operacion +", "+numero2_string);
                         // Realizara las operaciones
-                        String respuesta = calcular(
-                            Integer.parseInt(numero1_string),
-                            Integer.parseInt(numero2_string), 
-                            operacion);
+                        String respuesta = "";
+                        // Se valida la entrada
+                        try {
+                            respuesta = calcular(
+                                Integer.parseInt(numero1_string),
+                                Integer.parseInt(numero2_string), 
+                                operacion);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error alguno de los datos no es un número");
+                        }
                         // Devolvera al cliente
                         byte[] sendResponse = respuesta.getBytes();
 
@@ -61,7 +67,8 @@ public class CalculadoraServerUDP {
             }
         
     private static String calcular (int numero_a, int numero_b, String operacion) {
-        int respuesta = 0; 
+        int respuesta = 0;
+        try { 
         switch (operacion) {
             case "+":
                 respuesta = numero_a + numero_b;
@@ -76,7 +83,11 @@ public class CalculadoraServerUDP {
                 respuesta = numero_a / numero_b;
             return ""+respuesta;
             default:
-                return "No es un numero";
+                return "No es un numero o no has pasado una ioperación.\nOperaciones disponilbles ['+','-','*','/']";
         }
+    } catch (ArithmeticException e) {
+        System.out.println("Algun dato recibido era incorrecto");
+    }
+    return "Error recuerda que este programa no válida divisiones entre 0 o números no enteros";
     }
 }

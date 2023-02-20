@@ -18,7 +18,7 @@ public class CalculadoraClienteUDP {
         try (DatagramSocket clienSocket = new DatagramSocket()) {
             InetAddress host = InetAddress.getByName("localhost");
             Scanner in = new Scanner(System.in);
-            String envia="";
+            String envia = "";
            
             do {
                 // Lista de paquetes que se envian, elservidor espera 3.
