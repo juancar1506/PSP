@@ -1,61 +1,78 @@
 package SumaTCP;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class GestorClientes implements Runnable {
 
-    private Socket cliente;
-    private static final String SALIR = "salir";
-    
-    public GestorClientes(Socket cliente) {
-        this.cliente = cliente;
+    private Socket clientSocket;
+
+    public GestorClientes(Socket clientSocket) {
+        this.clientSocket = clientSocket;
     }
-    
-    @Override
+
     public void run() {
-        try (DataInputStream in = new DataInputStream(cliente.getInputStream());
-            DataOutputStream out = new DataOutputStream(cliente.getOutputStream());) {
-                String respuesta = "";
-                String num1S = "";
-                String operacion = "";
-                String num2S = "";
-                do {
-                    
-                    if (in.available() > 0) {
-                        respuesta = in.readUTF();
-                        // 
-                    }
-                } while (respuesta.equalsIgnoreCase(SALIR));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        try {
+            System.out.println("Conexión establecida desde " + clientSocket.getInetAddress().getHostAddress());
+
+            // Obtenemos los streams de entrada y salida del socket
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            // Leemos los datos del cliente
+            String message;
+            String operacion = "";
+            int num1,num2 = 0;
+            while ((message = in.readLine()) != null) {
+                
+                System.out.println("Mensaje recibido desde " + clientSocket.getInetAddress().getHostAddress() + ": " + message);
+                // Primer número
+                try {
+                    // Se divide en 2 numeros y un operador y se devuelve
+                    String[] partes = message.trim().split("\\s*[+\\-*/]\\s*");
+                    operacion = message.replaceAll("\\d+\\s*", "");
+                    num1 = Integer.parseInt(partes[0]);
+                    num2 = Integer.parseInt(partes[1]);
+                    String response = pedirOperacion(num1, num2, operacion);
     
-    private String calcular (int numero_a, int numero_b, String operacion) {
-        int respuesta = 0;
-        try { 
-            switch (operacion) {
-                case "+":
-                    respuesta = numero_a + numero_b;
-                    return ""+respuesta;
-                case "-":
-                    respuesta = numero_a - numero_b;
-                    return ""+respuesta;
-                case "*":
-                    respuesta = numero_a * numero_b;
-                    return ""+respuesta;
-                case "/":
-                    respuesta = numero_a / numero_b;
-                return ""+respuesta;
-                default:
-                    return "No es un numero o no has pasado una ioperación.\nOperaciones disponilbles ['+','-','*','/']";
+                    out.println(response);
+                    
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    out.println("No has escrito una operacion");
+                }
             }
-        } catch (ArithmeticException e) {
-            System.out.println("Algun dato recibido era incorrecto");
+                        
+            // Cerramos los streams y el socket
+            in.close();
+            out.close();
+            clientSocket.close();
+        } catch (IOException e) {
+            System.out.println("Error de entrada/salida al procesar los datos del cliente: " + e.getMessage());
         }
-        return "Error recuerda que este programa no válida divisiones entre 0 o números no enteros";
     }
+
+    // OPeraciones calc
+    public String pedirOperacion(int num1, int num2, String sumOp) throws IOException {
+        String operacion ="";
+        switch (sumOp) {
+            case "+":
+                operacion = ""+(num1 + num2);
+                break;
+            case "-":
+            operacion = ""+(num1 - num2);
+                break;
+            case "*":
+            operacion = ""+(num1 * num2);
+                break;
+            case "/":
+            operacion = ""+(num1 / num2);
+                break;
+            default:
+            operacion = "Error la operación fallo";
+                break;
+        }
+        return operacion;
+}
 }
