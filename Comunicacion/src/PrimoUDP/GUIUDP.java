@@ -17,8 +17,6 @@ public class GUIUDP extends JFrame implements ActionListener {
     private JLabel labelMensaje;
     private JLabel labelRespuesta;
 
-    private DatagramSocket clientSocket;
-
     public GUIUDP() {
         // Titulo
         super("¿ES PRIMO?");
@@ -55,14 +53,6 @@ public class GUIUDP extends JFrame implements ActionListener {
 
         // Visibilidad a true;
         setVisible(true);
-
-        // Se conecta al servidor
-        try {
-            clientSocket = new DatagramSocket();
-        } catch (SocketException e) {
-            System.err.println("Error al iniciar el cliente");
-            System.exit(1);
-        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -71,24 +61,36 @@ public class GUIUDP extends JFrame implements ActionListener {
         byte[] sendBuffer = numeroString.getBytes();
         byte[] receiveBuffer = new byte[1024];
             try {
-                InetAddress serverAddress = InetAddress.getByName("127.0.0.1");
-                int port = 12345;
+                // Nombre del servidor, suel ser localhost
+                InetAddress serverAddress = InetAddress.getByName("localhost");
+                // Puerto del servidor
+                int port = 1234;
+
+                // Se conecta al servidor
+                DatagramSocket clientSocket = new DatagramSocket();
+                System.out.println("Cliente conectado");
                 
                 // Se envia el número introducido
                 DatagramPacket sendPacket = new DatagramPacket(sendBuffer, sendBuffer.length, serverAddress, port);
                 clientSocket.send(sendPacket);
 
-                // Se recive el número
+                // Se recibe el número
                 DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
 
                 String response = new String(receivePacket.getData(),0,receivePacket.getLength());
                 textFRespuesta.setText(response);
                 textFRespuesta.setBorder(new EmptyBorder(0,20,0,0));
-
-            } catch (IOException ex) {
+                
+                clientSocket.close();
+            }
+            catch (SocketException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }
-        
+
+            catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            }
+            
     }
     
     public static void main(String[] args) {

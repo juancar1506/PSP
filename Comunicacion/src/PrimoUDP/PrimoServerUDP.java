@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Arrays;
+
 
 public class PrimoServerUDP  {
     public static void main(String[] args) throws IOException {
@@ -26,17 +26,18 @@ public class PrimoServerUDP  {
             while (true) {
                 DatagramPacket receivePacket = new DatagramPacket(bufferRecibido, bufferRecibido.length);
                 serverSocket.receive(receivePacket);
+                System.out.println("Recibo la información");
 
-                byte[] data = Arrays.copyOf(receivePacket.getData(), receivePacket.getLength());
-                String numeroString = new String(data);
+                String numeroString = new String(receivePacket.getData()).trim();
                 System.out.println(numeroString);
                 int numero = Integer.parseInt(numeroString);
-
+                int portCliente = receivePacket.getPort();
+                InetAddress addresCliente = receivePacket.getAddress();
+                
                 String esPrimo = esPrimo(numero);
-                String response = "El número "+numero+". "+ esPrimo + " es primo";
-                byte[] sendResponse = response.getBytes();
-
-                DatagramPacket sendPacket = new DatagramPacket(sendResponse, sendResponse.length,receivePacket.getAddress(), receivePacket.getPort());
+                byte[] sendResponse = esPrimo.getBytes();
+            
+                DatagramPacket sendPacket = new DatagramPacket(sendResponse, sendResponse.length,addresCliente, portCliente);
                 serverSocket.send(sendPacket);
             }
         } catch (IOException e) {
