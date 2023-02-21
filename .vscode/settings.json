@@ -1,8 +1,11 @@
 {
     "java.project.sourcePaths": [
+        "servicios/src/main/java/psp/servicios/HTTP",
         "Threads/src",
         "Comunicacion/src",
-        "servicios/src/main/java/psp/servicios/HTTP"
+        "servicios/src/main/java/psp/servicios/SMTP"
     ],
+    "maven.view": "hierarchical",
+    "maven.executable.options": ""
 
 }
